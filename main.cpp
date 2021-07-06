@@ -1,67 +1,86 @@
 #include <iostream>
 using namespace std;
 
-/*
-  MDC (a, b)
-  Máximo Divisor Comum entre dois números
-*/
-int MDC (int a, int b) {
-  /*
-  Algoritmo de Euclides
+const int MAX_LINHAS = 3;
+const int MAX_COLUNAS = 4;
 
-  enquanto b diferente de zero faça
-    r recebe resto da divisão entre a e b
-    a recebe o valor de b
-    b recebe o valor de r
-  fim-enquanto
-  retorne a
+/* 
+  leNotas (notas, linhas, colunas)
+  notas: matriz de notas com o tamanho máximo MAX_LINHAS por MAX_COLUNAS.
+  linhas: quantidade de linhas da matriz notas.
+  colunas: quantidade de colunas da matriz notas.
+  Realiza a leitura de notas com valores de 0 até 10.
+*/
+void leNotas (float notas[MAX_LINHAS][MAX_COLUNAS], int linhas, int colunas) {
+  for (int linha = 0; linha < linhas; linha++) {
+    for (int coluna = 0; coluna < colunas; coluna++) {
+      do {
+        cin >> notas[linha][coluna];
+      } while (notas[linha][coluna] < 0 || notas[linha][coluna] > 10);
+    }
+  }
+}
+
+/* 
+  maiorNota (notas, colunas)
+  notas: vetor de notas de uma linha da matriz
+  colunas: tamanho do vetor que é igual ao número de colunas da matriz
+  RETORNA o maior valor do vetor de notas.
+*/
+float maiorNota (float notas[MAX_COLUNAS], int colunas) {
+  float maior;
+  /* 
+    maior recebe a primeira nota de notas
+    PARA cada coluna do vetor EXECUTE
+      SE notas[coluna] > maior
+        maior recebe notas[coluna]
+      FIM-SE
+    FIM-PARA
+    RETORNE maior
   */
-  return 0;
+  return maior;
 }
 
 /*
-  MMC (a, b)
-  Mínimo Múltiplo Comum entre dois números
+  encontraMaioresNotas (maiores_notas, notas, linhas, colunas)
+  maiores_notas: vetor para armazenar a maior nota de cada aluno na matriz. Cada posição do vetor é relacionada a linha de uma matriz.
+  notas: matriz de notas de alunos e atividades realizadas.
+  linhas: número de alunos
+  colunas: número de atividades realizadas
+  Ao final da execução da função, o vetor maiores_notas terá as maiores notas dos alunos da matriz.
 */
-int MMC (int a, int b) {
-  /*
-    MMC(a, b) * MDC(a, b) = a * b
-
-    Para calcular o MMC, pode-se usar uma das fórmulas:
-    a) MMC(a, b) = a * (b / MDC(a, b)) OU
-    b) MMC(a, b) = b * (a / MDC(a, b))
+void encontraMaioresNotas (float maiores_notas[MAX_LINHAS], float notas[MAX_LINHAS][MAX_COLUNAS], int linhas, int colunas) {
+  float maior;
+  /* 
+    PARA cada linha da matriz EXECUTE
+      maior recebe maiorNota (notas[linha], colunas)
+      maiores_notas[linha] recebe maior
+    FIM PARA 
   */
-  return 0;
 }
 
-/*
-  saoPrimos (a, b)
-  Dois números são primos se o MDC é igual a 1
+/* 
+  imprimeMaioresNotas (notas, linhas)
+  notas: vetor das maiores notas.
+  n: tamanho do vetor.
+  IMPRIME cada uma das notas do vetor.
 */
-bool saoPrimos (int a, int b) {
-  /*
-    se o MDC (a, b) é igual a 1 retorne true
-    caso contrário retorne falso
-  */    
-  return false;
+void imprimeMaioresNotas (float notas[MAX_LINHAS], int n) {
+  for (int i = 0; i < n; i++)
+    cout << notas[i] << "\t";
+  cout << endl;
 }
 
 int main() {
-  int numA, numB;
+  float notas[MAX_LINHAS][MAX_COLUNAS];
+  float maiores_notas[MAX_LINHAS];
+  int nAlunos, nAtividades;
 
-  cin >> numA >> numB;
+  leNotas (notas, MAX_LINHAS, MAX_COLUNAS);
 
-  cout << "MDC(" << numA << ", " << numB << ") = "
-       << MDC (numA, numB) << endl;
-  cout << "MMC(" << numA << ", " << numB << ") = "
-       << MMC (numA, numB) << endl;
-  
-  cout << numA << " e " << numB;
-  bool primos = saoPrimos(numA, numB);
-  if (primos == true)
-    cout << " sao primos.\n";
-  else
-    cout << " não sao primos.\n";
+  encontraMaioresNotas (maiores_notas, notas, MAX_LINHAS, MAX_COLUNAS);
+
+  imprimeMaioresNotas (maiores_notas, MAX_LINHAS);
 
   return 0;
 }
